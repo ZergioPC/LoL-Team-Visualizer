@@ -5,17 +5,30 @@ import { LolSearch } from './components/LolSearch';
 import { LolChampList } from './components/LolChampList';
 import { LolChampItem } from './components/LolChampItem';
 
-import UseFetchApi from './hooks/UseFetchApi';
+import UseGetChamps from './hooks/UseGetChamps';
+import UseFindChamps from './hooks/UseFindChamps';
 
 function App() {
+  const ChampsInitList = UseGetChamps();
+
   const [query, setQuery] = React.useState("");
-  const data = UseFetchApi(query);
 
   return (
     <>
       <LolSearch 
-        query={query}
+        champList={UseFindChamps(query, ChampsInitList)}
         OnSetQuery={setQuery}
+        onRenderOptions={
+          (list)=>list.map(
+            champ=>(
+              <li key={champ.id}>
+                <button 
+                >{champ.name}
+                </button>
+              </li>
+            )
+          )
+        }
       />
 
       <LolChampList>

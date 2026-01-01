@@ -1,8 +1,6 @@
 import React from "react";
 
-const LolSearch = ({ options , OnSetQuery })=>{
-  console.log(options);
-
+const LolSearch = ({ champList , OnSetQuery, onRenderOptions })=>{
   return(
     <div>
       <input
@@ -10,13 +8,10 @@ const LolSearch = ({ options , OnSetQuery })=>{
         placeholder="Buscar Champ"
         onChange={(e)=>OnSetQuery(e.target.value)}
       />
-
-      <button
-        type="button"
-        onClick={()=>console.log("champ")}
-      >Agregar</button>
       
-      <ul></ul>
+      <ul>
+        {onRenderOptions(champList)}
+      </ul>
     </div>
   );
 }
