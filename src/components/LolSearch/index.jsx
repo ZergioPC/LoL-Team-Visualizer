@@ -1,6 +1,6 @@
 import React from "react";
 
-const LolSearch = ({ champList , OnSetQuery, OnFetchData })=>{
+const LolSearch = ({ champList , OnSetQuery, OnAddChamp })=>{
   return(
     <div>
       <input
@@ -10,12 +10,11 @@ const LolSearch = ({ champList , OnSetQuery, OnFetchData })=>{
       />
       
       <ul>
-        {champList.map(champ=>(
+        {champList.map( champ =>(
           <li key={champ.id}>
             <button
-              onClick={()=> OnFetchData(champ.id)} 
-            >{champ.name}
-            </button>
+              onClick={()=> OnAddChamp(champ.id)} 
+            >{champ.name}</button>
           </li>
         ))}
       </ul>
