@@ -78,10 +78,11 @@ function App() {
 
   return (
     <>
-      <section>
-        <h2>Equipo Azul</h2>
-
-        <LolSearch 
+    <main className='teams-panel'>
+      <section className='blue-team'>
+        <LolSearch
+          query={search.queryBlue} 
+          teamName="Equipo Azul"
           champList={UseFindChamps(search.queryBlue, champsInitList)}
           OnSetQuery={setQueryBlueSearch}
           OnAddChamp={(champ)=>{
@@ -97,11 +98,11 @@ function App() {
           )}
         </LolChampList>
       </section>
-
-      <section>
-        <h2>Equipo Rojo</h2>
-
-        <LolSearch 
+            
+      <section className='red-team'>
+        <LolSearch
+          query={search.queryRed} 
+          teamName="Equipo Rojo"
           champList={UseFindChamps(search.queryRed, champsInitList)}
           OnSetQuery={setQueryRedSearch}
           OnAddChamp={(champ)=>{
@@ -117,6 +118,7 @@ function App() {
           )}
         </LolChampList>
       </section>
+      </main>
     </>
   )
 }

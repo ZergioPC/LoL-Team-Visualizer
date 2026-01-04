@@ -1,0 +1,20 @@
+.teams-panel {
+  display: flex;
+  flex-direction: row;
+}
+
+.teams-panel > section {
+  width: 100%;
+  margin: 10px;
+  padding: 10px 15px;
+  height: var(--panel-size);
+  border-radius: 15px;
+}
+
+.red-team {
+  background-color: var(--color-red-bg);
+}
+
+.blue-team {
+  background-color: var(--color-blue-bg);
+}

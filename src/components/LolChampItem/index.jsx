@@ -1,23 +1,31 @@
 import React from "react";
 import UseApiEndpoints from "../../hooks/UseApiEndpoints";
+import "./LolChampItem.css"
 
 const LolChampItem = ({ champ })=>{
   //console.log(champ);
-  
+
+  const keys = ["Q", "W", "E", "R"];
   const { champImg:URL } =  UseApiEndpoints();
+  
   return(
-    <article>
-      <section>
-        <h3>{champ.name}</h3>
-      </section>
+    <article className="LolChampItem">
+      <h3>{champ.name}</h3>
+
       <figure>
-        <img src={URL + champ.image.full} alt={champ.id + "_avatar"} />
+        <img src={URL + champ.image.full} alt={"Foto de " + champ.id} />
       </figure>
-      <ul>
-        {champ.spells.map(spell => (
-          <li key={spell.id}>{spell.name}</li>
+
+      <ol>
+        {champ.spells.map((spell,index) => (
+          <li 
+            key={spell.id}
+          > 
+            <span>{keys[index]}</span>
+            <p>{spell.name}</p>
+          </li>
         ))}
-      </ul>
+      </ol>
     </article>
   );
 }

@@ -1,0 +1,49 @@
+.LolSearch {
+  box-sizing: border-box;
+  padding: 4px;
+  display: flex;
+}
+
+.LolSearch > h2 {
+  margin-right: 10px;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.LolSearch-input {
+  position: relative;
+}
+
+.LolSearch-input > input {
+  font-size: 13px;
+  padding: 2px 5px;
+  border: none;
+  outline: none;
+}
+
+.LolSearch-input > input:focus {
+  border-bottom-color: #000;
+}
+
+.LolSearch-input > input::placeholder {
+  color: #999;
+}
+
+.LolSearch-results {
+  z-index: 5;
+  box-sizing: border-box;
+  position: absolute;
+  list-style: none;
+  padding: 5px;
+  width: 100%;
+  color: #cacaca;
+  background-color: #00000062;
+  border-radius: 0px 0px 5px 5px;
+}
+
+.LolSearch-results button {
+  margin: 1px;
+  width: 100%;
+  font-size: 14px;
+  border-radius: 5px;
+}

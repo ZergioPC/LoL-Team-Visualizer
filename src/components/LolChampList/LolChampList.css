@@ -1,0 +1,7 @@
+.LolChampList {
+  display: flex;
+  margin-top: 5px;
+  height: calc(var(--panel-size) - 40px);
+  flex-direction: column;
+  gap: 10px;
+}

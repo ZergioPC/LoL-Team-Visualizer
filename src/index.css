@@ -1,0 +1,17 @@
+:root {
+  --panel-size : calc(99vh - 40px);
+  --color-red-bg: #d37979c2; 
+  --color-blue-bg: #7982d3c2; 
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+}
+
+body {
+  background-image: url(https://cmsassets.rgpub.io/sanity/images/dsfx7636/universe/f81004a39c5502d766169beb4a342c46b0030d36-1920x946.jpg);
+  background-size: cover;
+}
