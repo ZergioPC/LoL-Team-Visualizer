@@ -6,7 +6,7 @@ import { LolChampList } from './components/LolChampList';
 import { LolChampItem } from './components/LolChampItem';
 
 import UseApiEndpoints from './hooks/UseApiEndpoints';
-
+import UseTeamsLogic from './hooks/UseTeamsLogic';
 import UseGetChamps from './hooks/UseGetChamps';
 import UseFindChamps from './hooks/UseFindChamps';
 
@@ -17,76 +17,100 @@ const TeamTypes = {
   red: "RED"
 }
 
-const searchStateInit = {
-  query: "",
-  champId: null,
-  team: null
-}
-
-function addTeamChamp(team, champ){
-  switch (team) {
-    case TeamTypes.blue:
-      console.log("blue");
-      return;
-    case TeamTypes.red:
-      console.log(champ);
-      return;
-  }
-}
-
 function App() {
-  const {
-    blueTeam, 
-    redTeam, 
-    setBlueChamp, 
-    setRedTeam
-  } = UseTeamsLogic();
   const URLs = UseApiEndpoints()
   const champsInitList = UseGetChamps(URLs.champList);
   
-  const [search, setSearch] = React.useState(searchStateInit);
+  // MARK: Search
+  const [search, setSearch] = React.useState(
+    { query: "", champId: null, team: null }
+  );
   
   const setQuerySearch = (value)=> setSearch({
     ...search,
-    query: value
+    query: value,
   });
 
-  const setChampIdSearch = (value)=> setSearch({
+  const setChampTeamSearch = (id, team)=> setSearch({
     ...search,
-    champId: value
-  });
-
-  const setTeamSearch = (value)=> setSearch({
-    ...search,
-    team: value
+    champId: id,
+    team: team
   });
 
   React.useEffect(()=>{
     if (!search.champId) return;
-
-    fetch(URLs.champData + search.champId + ".json")
-      .then(res => res.json())
-      .then(data => {
-        console.log(data.data[search.champId]);
-      })
-      .catch(e => console.log("ERROR E: ", e));
     
-  },[search.champId]);
+    fetch(URLs.champData + search.champId + ".json")
+    .then(res => res.json())
+    .then(data => {
+      console.log(search);
+      addTeamChamp(search.team, data.data[search.champId]);
+    }).catch(e => console.log("ERROR CHE: ", e));
+    
+  },[search.champId, search.team]);
+
+  // MARK: Teams
+  const {
+    blueTeam, 
+    redTeam, 
+    setBlueChamp, 
+    setRedChamp,
+    rmBlueChamp,
+    rmRedChamp
+  } = UseTeamsLogic();
+
+  function addTeamChamp(team, champ){    
+    switch (team) {
+      case TeamTypes.blue:
+        setBlueChamp(champ);
+        return;
+      case TeamTypes.red:
+        setRedChamp(champ)
+        return;
+    }
+  }
 
   return (
     <>
-      <LolSearch 
-        champList={UseFindChamps(search.query, champsInitList)}
-        OnSetQuery={setQuerySearch}
-        OnAddChamp={(champ)=>{
-          setTeamSearch(TeamTypes.blue);
-          setChampIdSearch(champ);
-        }}
-      />
+      <section>
+        <h2>Equipo Azul</h2>
 
-      <LolChampList>
-        <LolChampItem />
-      </LolChampList>
+        <LolSearch 
+          champList={UseFindChamps(search.query, champsInitList)}
+          OnSetQuery={setQuerySearch}
+          OnAddChamp={(champ)=>{
+            setChampTeamSearch(
+              champ, TeamTypes.blue
+            );
+          }}
+        />
+
+        <LolChampList>
+          {blueTeam.map(
+            champ => <LolChampItem key={champ.id} champ={champ}/>
+          )}
+        </LolChampList>
+      </section>
+
+      <section>
+        <h2>Equipo Rojo</h2>
+
+        <LolSearch 
+          champList={UseFindChamps(search.query, champsInitList)}
+          OnSetQuery={setQuerySearch}
+          OnAddChamp={(champ)=>{
+            setChampTeamSearch(
+              champ, TeamTypes.red
+            );
+          }}
+        />
+
+        <LolChampList>
+          {redTeam.map(
+            champ => <LolChampItem key={champ.id} champ={champ}/>
+          )}
+        </LolChampList>
+      </section>
     </>
   )
 }

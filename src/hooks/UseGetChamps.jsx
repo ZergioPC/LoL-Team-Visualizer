@@ -1,8 +1,6 @@
 import React from "react";
 
-const URL = "https://ddragon.leagueoflegends.com/cdn/15.24.1/data/es_MX/champion.json";
-
-function UseGetChamps (){
+function UseGetChamps (URL){
   const [data, setData] = React.useState(null);
   React.useEffect(()=>{
     fetch(URL)

@@ -1,9 +1,11 @@
 import React from "react";
 
-const LolChampItem = ()=>{
+const LolChampItem = ({ champ })=>{
+  //console.log(champ);
+  
   return(
     <article>
-      "uwu"
+      {champ.name}
     </article>
   );
 }
