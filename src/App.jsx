@@ -23,16 +23,23 @@ function App() {
   
   // MARK: Search
   const [search, setSearch] = React.useState(
-    { query: "", champId: null, team: null }
+    { queryRed: "", queryBlue: "", champId: null, team: null }
   );
   
-  const setQuerySearch = (value)=> setSearch({
+  const setQueryBlueSearch = (value)=> setSearch({
     ...search,
-    query: value,
+    queryBlue: value,
+  });
+
+  const setQueryRedSearch = (value)=> setSearch({
+    ...search,
+    queryRed: value,
   });
 
   const setChampTeamSearch = (id, team)=> setSearch({
     ...search,
+    queryRed: "",
+    queryBlue: "",
     champId: id,
     team: team
   });
@@ -43,7 +50,6 @@ function App() {
     fetch(URLs.champData + search.champId + ".json")
     .then(res => res.json())
     .then(data => {
-      console.log(search);
       addTeamChamp(search.team, data.data[search.champId]);
     }).catch(e => console.log("ERROR CHE: ", e));
     
@@ -76,8 +82,8 @@ function App() {
         <h2>Equipo Azul</h2>
 
         <LolSearch 
-          champList={UseFindChamps(search.query, champsInitList)}
-          OnSetQuery={setQuerySearch}
+          champList={UseFindChamps(search.queryBlue, champsInitList)}
+          OnSetQuery={setQueryBlueSearch}
           OnAddChamp={(champ)=>{
             setChampTeamSearch(
               champ, TeamTypes.blue
@@ -96,8 +102,8 @@ function App() {
         <h2>Equipo Rojo</h2>
 
         <LolSearch 
-          champList={UseFindChamps(search.query, champsInitList)}
-          OnSetQuery={setQuerySearch}
+          champList={UseFindChamps(search.queryRed, champsInitList)}
+          OnSetQuery={setQueryRedSearch}
           OnAddChamp={(champ)=>{
             setChampTeamSearch(
               champ, TeamTypes.red
