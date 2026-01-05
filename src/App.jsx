@@ -4,6 +4,7 @@ import './App.css';
 import { LolSearch } from './components/LolSearch';
 import { LolChampList } from './components/LolChampList';
 import { LolChampItem } from './components/LolChampItem';
+import { LolChampItemLoad } from './components/LolChampItemLoad';
 
 import UseApiEndpoints from './hooks/UseApiEndpoints';
 import UseTeamsLogic from './hooks/UseTeamsLogic';
@@ -20,6 +21,26 @@ const TeamTypes = {
 function App() {
   const URLs = UseApiEndpoints()
   const champsInitList = UseGetChamps(URLs.champList);
+
+  // MARK: Load-Error 
+  const [loading, setLoading] = React.useState({
+    blue:false, red:false
+  });
+
+  const setBlueLoading = ()=> setLoading({
+    ...loading,
+    blue:true
+  });
+
+  const setRedLoading = ()=> setLoading({
+    ...loading,
+    red:true
+  });
+
+  const setStopLoading = ()=> setLoading({
+    blue:false, 
+    red:false
+  });
   
   // MARK: Search
   const [search, setSearch] = React.useState(
@@ -45,6 +66,15 @@ function App() {
   });
 
   React.useEffect(()=>{
+    switch(search.team){
+      case TeamTypes.blue :
+        setBlueLoading();
+        break;
+      case TeamTypes.red :
+        setRedLoading();
+        break;
+    }
+
     if (!search.champId) return;
     
     fetch(URLs.champData + search.champId + ".json")
@@ -66,6 +96,7 @@ function App() {
   } = UseTeamsLogic();
 
   function addTeamChamp(team, champ){    
+    setStopLoading();
     switch (team) {
       case TeamTypes.blue:
         setBlueChamp(champ);
@@ -96,6 +127,7 @@ function App() {
           {blueTeam.map(
             champ => <LolChampItem key={champ.id} champ={champ}/>
           )}
+          {loading.blue && <LolChampItemLoad />}
         </LolChampList>
       </section>
             
@@ -116,6 +148,7 @@ function App() {
           {redTeam.map(
             champ => <LolChampItem key={champ.id} champ={champ}/>
           )}
+          {loading.red && <LolChampItemLoad />}
         </LolChampList>
       </section>
       </main>

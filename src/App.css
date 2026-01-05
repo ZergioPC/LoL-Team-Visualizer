@@ -18,3 +18,17 @@
 .blue-team {
   background-color: var(--color-blue-bg);
 }
+
+@media screen and (max-width: 900px) {
+  .teams-panel {
+    flex-direction: column;
+  }
+  .teams-panel > section {
+    box-sizing: border-box;
+    width: 97%;
+    padding: 10px 15px;
+    min-height: var(--panel-size);
+    height: auto;
+    border-radius: 15px;
+  }
+}

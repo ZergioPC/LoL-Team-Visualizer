@@ -29,6 +29,7 @@
   overflow: hidden;
   border: solid 3px black;
   border-radius: 50%;
+  background-color: black;
 }
 
 .LolChampItem img {
