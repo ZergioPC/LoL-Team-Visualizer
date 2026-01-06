@@ -170,6 +170,7 @@ function App() {
                 key={index} 
                 id={champ.id} 
                 champ={champ}
+                OnRemove={(id)=> rmBlueChamp(id)}
               />
           )}
           {loading.blue && <LolChampItemLoad />}
@@ -196,6 +197,7 @@ function App() {
                 key={index} 
                 id={champ.id} 
                 champ={champ}
+                OnRemove={(id)=> rmRedChamp(id)}
               />
           )}
           {loading.red && <LolChampItemLoad />}

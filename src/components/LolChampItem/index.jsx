@@ -2,7 +2,7 @@ import React from "react";
 import getApiEndpoints from "../../utils/getApiEndpoints";
 import "./LolChampItem.css"
 
-const LolChampItem = ({ champ })=>{
+const LolChampItem = ({ champ, OnRemove })=>{
   //console.log(champ);
 
   const keys = ["Q", "W", "E", "R"];
@@ -10,6 +10,10 @@ const LolChampItem = ({ champ })=>{
   
   return(
     <article className="LolChampItem">
+      <button 
+        className="LolChampItem-btn" 
+        onClick={()=> OnRemove(champ.id)}
+      />
       <h3>{champ.name}</h3>
 
       <figure>

@@ -45,9 +45,9 @@
 
 @keyframes load-item {
   0%{
-    opacity: 30%;
+    opacity: 20%;
   }
   100%{
-    opacity: 50%;
+    opacity: 60%;
   }
 }

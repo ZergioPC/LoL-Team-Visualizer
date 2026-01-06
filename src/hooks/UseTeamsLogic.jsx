@@ -13,7 +13,10 @@ function UseTeamsLogic (){
   };
 
   const rmBlueChamp = (id) => {
-    console.log(id);
+    const newArray = blueTeam.filter(
+      champ => champ.id !== id
+    );
+    setBlueTeam(newArray);
   }
 
   const setRedChamp = (newChamp) => {
@@ -25,7 +28,10 @@ function UseTeamsLogic (){
   };
 
   const rmRedChamp = (id) => {
-    console.log(id);
+    const newArray = redTeam.filter(
+      champ => champ.id !== id
+    );
+    setRedTeam(newArray);
   }
 
   return {
