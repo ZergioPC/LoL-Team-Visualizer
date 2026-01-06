@@ -92,21 +92,23 @@ function App() {
 
     if (!search.champId) return;
 
-    if (
-      checkNoRepeatData(search.champId, blueTeam)
-      || checkNoRepeatData(search.champId, redTeam)
-    ){
-      setShowModal(
-        "No se puede repetir campeón en un mismo equipo"
-      );
-      return;
-    }
-
     switch(search.team){
-      case TeamTypes.blue :
+      case TeamTypes.blue :        
+        if (checkNoRepeatData(search.champId, blueTeam)){
+          setShowModal(
+            "No se puede repetir campeón en un mismo equipo"
+          );
+          return;
+        }
         setBlueLoading();
         break;
       case TeamTypes.red :
+        if (checkNoRepeatData(search.champId, redTeam)){
+          setShowModal(
+            "No se puede repetir campeón en un mismo equipo"
+          );
+          return;
+        }
         setRedLoading();
         break;
     }
@@ -163,7 +165,12 @@ function App() {
 
         <LolChampList>
           {blueTeam.map(
-            champ => <LolChampItem key={champ.id} champ={champ}/>
+            (champ, index) => 
+              <LolChampItem 
+                key={index} 
+                id={champ.id} 
+                champ={champ}
+              />
           )}
           {loading.blue && <LolChampItemLoad />}
         </LolChampList>
@@ -184,7 +191,12 @@ function App() {
 
         <LolChampList>
           {redTeam.map(
-            champ => <LolChampItem key={champ.id} champ={champ}/>
+            (champ, index) => 
+              <LolChampItem 
+                key={index} 
+                id={champ.id} 
+                champ={champ}
+              />
           )}
           {loading.red && <LolChampItemLoad />}
         </LolChampList>
