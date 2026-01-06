@@ -1,6 +1,6 @@
 import React from "react";
 
-function UseApiEndpoints (){
+function getApiEndpoints (){
   const URL = "https://ddragon.leagueoflegends.com/cdn/15.24.1"
 
   const CHAMPS_LIST = "/data/es_MX/champion.json";
@@ -13,4 +13,4 @@ function UseApiEndpoints (){
     champImg: URL + CHAMP_IMG
   }
 }
-export default UseApiEndpoints;
+export default getApiEndpoints;

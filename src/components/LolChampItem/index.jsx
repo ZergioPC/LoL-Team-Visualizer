@@ -1,12 +1,12 @@
 import React from "react";
-import UseApiEndpoints from "../../hooks/UseApiEndpoints";
+import getApiEndpoints from "../../utils/getApiEndpoints";
 import "./LolChampItem.css"
 
 const LolChampItem = ({ champ })=>{
   //console.log(champ);
 
   const keys = ["Q", "W", "E", "R"];
-  const { champImg:URL } =  UseApiEndpoints();
+  const { champImg:URL } =  getApiEndpoints();
   
   return(
     <article className="LolChampItem">

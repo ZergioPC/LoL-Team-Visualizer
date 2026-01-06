@@ -1,6 +1,6 @@
 import React from "react";
 
-function UseFindChamps (query,list){
+function findChamps (query,list){
   const maxLenght = 5;
   const [results, setResults] = React.useState([]);
 
@@ -21,4 +21,4 @@ function UseFindChamps (query,list){
   return results;
 }
 
-export default UseFindChamps;
+export default findChamps;

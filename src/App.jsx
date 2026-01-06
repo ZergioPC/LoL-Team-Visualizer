@@ -8,10 +8,12 @@ import { LolChampItemLoad } from './components/LolChampItemLoad';
 
 import { Modal } from './components/Modal';
 
-import UseApiEndpoints from './hooks/UseApiEndpoints';
 import UseTeamsLogic from './hooks/UseTeamsLogic';
 import UseGetChamps from './hooks/UseGetChamps';
-import UseFindChamps from './hooks/UseFindChamps';
+
+import findChamps from './utils/findChamps';
+import getApiEndpoints from './utils/getApiEndpoints';
+import checkNoRepeatData from './utils/checkNoRepeatData';
 
 // DOC API https://developer.riotgames.com/docs/lol#data-dragon_champions
 
@@ -21,7 +23,7 @@ const TeamTypes = {
 }
 
 function App() {
-  const URLs = UseApiEndpoints()
+  const URLs = getApiEndpoints()
   const champsInitList = UseGetChamps(URLs.champList);
 
   // MARK: Load-Error 
@@ -87,7 +89,19 @@ function App() {
       );
       return;
     }
-    
+
+    if (!search.champId) return;
+
+    if (
+      checkNoRepeatData(search.champId, blueTeam)
+      || checkNoRepeatData(search.champId, redTeam)
+    ){
+      setShowModal(
+        "No se puede repetir campeón en un mismo equipo"
+      );
+      return;
+    }
+
     switch(search.team){
       case TeamTypes.blue :
         setBlueLoading();
@@ -96,8 +110,6 @@ function App() {
         setRedLoading();
         break;
     }
-
-    if (!search.champId) return;
     
     fetch(URLs.champData + search.champId + ".json")
     .then(res => res.json())
@@ -128,7 +140,10 @@ function App() {
         setRedChamp(champ)
         return;
     }
-  }
+  } 
+
+  const blueChampList = findChamps(search.queryBlue, champsInitList);
+  const redChampList  = findChamps(search.queryRed, champsInitList);
 
   return (
     <>
@@ -137,7 +152,7 @@ function App() {
         <LolSearch
           query={search.queryBlue} 
           teamName="Equipo Azul"
-          champList={UseFindChamps(search.queryBlue, champsInitList)}
+          champList={blueChampList}
           OnSetQuery={setQueryBlueSearch}
           OnAddChamp={(champ)=>{
             setChampTeamSearch(
@@ -158,7 +173,7 @@ function App() {
         <LolSearch
           query={search.queryRed} 
           teamName="Equipo Rojo"
-          champList={UseFindChamps(search.queryRed, champsInitList)}
+          champList={redChampList}
           OnSetQuery={setQueryRedSearch}
           OnAddChamp={(champ)=>{
             setChampTeamSearch(
