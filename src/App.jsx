@@ -6,6 +6,8 @@ import { LolChampList } from './components/LolChampList';
 import { LolChampItem } from './components/LolChampItem';
 import { LolChampItemLoad } from './components/LolChampItemLoad';
 
+import { Modal } from './components/Modal';
+
 import UseApiEndpoints from './hooks/UseApiEndpoints';
 import UseTeamsLogic from './hooks/UseTeamsLogic';
 import UseGetChamps from './hooks/UseGetChamps';
@@ -23,6 +25,19 @@ function App() {
   const champsInitList = UseGetChamps(URLs.champList);
 
   // MARK: Load-Error 
+  const [modal, setModal] = React.useState({
+    visible: false,
+    message: ""
+  });
+
+  const setShowModal = (txt)=>{
+    setModal({
+      ...modal,
+      visible: true,
+      message: txt
+    });
+  }
+
   const [loading, setLoading] = React.useState({
     blue:false, red:false
   });
@@ -66,6 +81,13 @@ function App() {
   });
 
   React.useEffect(()=>{
+    if (blueTeam.length >= 5 || redTeam.length >= 5) {
+      setShowModal(
+        "Solo 5 campeones por equipo"
+      );
+      return;
+    }
+    
     switch(search.team){
       case TeamTypes.blue :
         setBlueLoading();
@@ -95,8 +117,9 @@ function App() {
     rmRedChamp
   } = UseTeamsLogic();
 
-  function addTeamChamp(team, champ){    
+  function addTeamChamp(team, champ){
     setStopLoading();
+
     switch (team) {
       case TeamTypes.blue:
         setBlueChamp(champ);
@@ -152,6 +175,10 @@ function App() {
         </LolChampList>
       </section>
       </main>
+
+      {modal.visible && <Modal onClose={()=> setModal(false)}>
+          <p>{modal.message}</p>
+      </Modal>}
     </>
   )
 }
