@@ -19,6 +19,37 @@
   background-color: var(--color-blue-bg);
 }
 
+.info {
+  position: absolute;
+  top: 5px;
+  left: calc(50% - 20px);
+  aspect-ratio: 1/1;
+  width: 40px;
+  border-radius: 50%;
+
+  cursor: pointer;
+  border: none;
+  background: rgba(255, 255, 255, 0.418);
+  color: #000000;
+  font-size: 22px;
+  transition: 
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.15s ease,
+    box-shadow 0.25s ease;
+}
+
+.info:hover {
+  color: #575757;
+  background: #ffff;
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.35);
+}
+
+.info:active {
+  transform: scale(0.95);
+}
+
 @media screen and (max-width: 900px) {
   .teams-panel {
     flex-direction: column;

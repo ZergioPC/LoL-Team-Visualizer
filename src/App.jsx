@@ -149,6 +149,19 @@ function App() {
 
   return (
     <>
+    <button 
+      className='info'
+      onClick={()=> setShowModal(
+        <>
+          <h1>LoL Team Champs view</h1>
+          <span><i>por Sergio Palacios</i></span>
+          <p>
+            Organiza y Crea equipos con Campeones de <b>League of Legends</b> con el fin de visualizar sus habilidades de forma más comoda y rapida.
+          </p>
+        </>
+      )}
+    >?</button>
+
     <main className='teams-panel'>
       <section className='blue-team'>
         <LolSearch
@@ -206,7 +219,7 @@ function App() {
       </main>
 
       {modal.visible && <Modal onClose={()=> setModal(false)}>
-          <p>{modal.message}</p>
+          <div>{modal.message}</div>
       </Modal>}
     </>
   )
