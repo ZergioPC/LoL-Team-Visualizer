@@ -82,6 +82,14 @@ function App() {
     team: team
   });
 
+  const setChampSearchDefault = ()=> setSearch({
+    ...search,
+    queryRed: "", 
+    queryBlue: "", 
+    champId: null, 
+    team: null
+  })
+
   React.useEffect(()=>{
     if (!search.champId) return;
 
@@ -98,6 +106,7 @@ function App() {
           setShowModal(
             "No se puede repetir campeón en un mismo equipo"
           );
+          setChampSearchDefault();
           return;
         }
         setBlueLoading();
@@ -114,6 +123,7 @@ function App() {
           setShowModal(
             "No se puede repetir campeón en un mismo equipo"
           );
+          setChampSearchDefault();
           return;
         }
         setRedLoading();
@@ -124,6 +134,7 @@ function App() {
     .then(res => res.json())
     .then(data => {
       addTeamChamp(search.team, data.data[search.champId]);
+      setChampSearchDefault();
     }).catch(e => console.log("ERROR CHE: ", e));
     
   },[search.champId, search.team]);
