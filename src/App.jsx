@@ -83,17 +83,17 @@ function App() {
   });
 
   React.useEffect(()=>{
-    if (blueTeam.length >= 5 || redTeam.length >= 5) {
-      setShowModal(
-        "Solo 5 campeones por equipo"
-      );
-      return;
-    }
-
     if (!search.champId) return;
 
     switch(search.team){
-      case TeamTypes.blue :        
+      case TeamTypes.blue :   
+        if (blueTeam.length >= 5) {
+          setShowModal(
+            "Solo 5 campeones por equipo"
+          );
+          return;
+        }     
+
         if (checkNoRepeatData(search.champId, blueTeam)){
           setShowModal(
             "No se puede repetir campeón en un mismo equipo"
@@ -103,6 +103,13 @@ function App() {
         setBlueLoading();
         break;
       case TeamTypes.red :
+        if (redTeam.length >= 5) {
+          setShowModal(
+            "Solo 5 campeones por equipo"
+          );
+          return;
+        }     
+
         if (checkNoRepeatData(search.champId, redTeam)){
           setShowModal(
             "No se puede repetir campeón en un mismo equipo"
